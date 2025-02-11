@@ -5,6 +5,10 @@ namespace ApiProjectCamp.WebApi.Context
 {
     public class ApiContext : DbContext
     {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;initial catalog=ApiYummyDb;integrated security=true;");
+        }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Chef> Chefs { get; set; }
         public DbSet<Contact> Contacts { get; set; }
@@ -15,9 +19,6 @@ namespace ApiProjectCamp.WebApi.Context
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ApiYummyDb;integrated Security=True;");
-        }
+        
     }
 }
