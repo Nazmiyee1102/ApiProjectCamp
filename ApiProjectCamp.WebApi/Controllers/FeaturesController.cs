@@ -1,5 +1,6 @@
 ﻿using ApiProjectCamp.WebApi.Context;
 using ApiProjectCamp.WebApi.Entities;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,11 @@ namespace ApiProjectCamp.WebApi.Controllers
     public class FeaturesController : ControllerBase
     {
         private readonly ApiContext _context;
-
-        public FeaturesController(ApiContext context)
+        private readonly IMapper _mapper;
+        public FeaturesController(ApiContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
