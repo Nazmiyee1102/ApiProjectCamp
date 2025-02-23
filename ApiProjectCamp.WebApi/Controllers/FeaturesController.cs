@@ -1,4 +1,5 @@
 ﻿using ApiProjectCamp.WebApi.Context;
+using ApiProjectCamp.WebApi.Dtos.FeatureDtos;
 using ApiProjectCamp.WebApi.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -22,22 +23,23 @@ namespace ApiProjectCamp.WebApi.Controllers
         public IActionResult FeatureList()
         {
             var values = _context.Features.ToList();
-            return Ok(values);
+            return Ok(_mapper.Map<List<ResultFeatureDto>>(values));
         }
 
         [HttpPost]
-        public IActionResult CreateFeature(Feature feature)
+        public IActionResult CreateFeature(CreateFeatureDto createFeatureDto)
         {
-            _context.Features.Add(feature);
+            var value = _mapper.Map<Feature>(createFeatureDto);
+            _context.Features.Add(value);
             _context.SaveChanges();
             return Ok("Öne Çıkan Ekleme İşlemi Başarılı!");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public IActionResult DeleteFeature(int id)
         {
             var feature = _context.Features.Find(id);
-            var value = _context.Features.Remove(feature);
+            _context.Features.Remove(feature);
             _context.SaveChanges();
             return Ok("Öne Çıkan Silme İşlemi Başarılı!");
         }
@@ -46,13 +48,14 @@ namespace ApiProjectCamp.WebApi.Controllers
         public IActionResult GetFeature(int id)
         {
             var value = _context.Features.Find(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetByIdFeatureDto>(value));
         }
 
         [HttpPut]
-        public IActionResult UpdateFeature(Feature feature)
+        public IActionResult UpdateFeature(UpdateFeatureDto updateFeatureDto)
         {
-            _context.Features.Update(feature);
+            var value = _mapper.Map<Feature>(updateFeatureDto);
+            _context.Features.Update(value);
             _context.SaveChanges();
             return Ok("Öne Çıkan Başarıyla Güncellendi!");
         }
